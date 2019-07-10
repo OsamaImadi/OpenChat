@@ -11,13 +11,16 @@ app.use(express.static('public'));
 //Setting up socket
 var io = socket(server);
 
+//gathering data from other open sockets
 io.on('connection',(socket)=>{
     console.log('Connection made to socket');
 
+    //working with chat
     socket.on('chat',(data)=>{
         io.emit('chat', data);
     });
 
+    //working with 'is typing'
     socket.on('typing',(data)=>{
         socket.broadcast.emit('typing', data);
     });
